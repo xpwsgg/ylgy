@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+    <title>刷了个羊</title>
+    <link href="//lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/5.1.3/css/bootstrap.css" type="text/css"
+          rel="stylesheet">
+    <script src="//s3.pstatp.com/cdn/expire-1-w/jquery/3.4.0/jquery.min.js"></script>
+    <script src="//lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layer/3.5.1/layer.min.js"
+            type="application/javascript"></script>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0
+    }
+
+    body {
+        background-color: #75c473;
+        padding-bottom: 2rem
+    }
+
+    body > .container {
+        width: 800px;
+        background: url(https://img04.sogoucdn.com/app/a/200692/750_512_feedback_a61b4662d89b4af9af786db02c493f34.jpg) no-repeat top;
+        background-size: 100%
+    }
+
+    .box {
+        background-color: #fff;
+        border-radius: 2rem;
+        height: 100%;
+        top: 15rem;
+        position: relative;
+        padding: 2rem;
+        box-shadow: 0 .4rem 1rem .1rem rgb(0 0 0/20%)
+    }
+
+    .box .form-control {
+        border-radius: 1rem
+    }
+
+    .box .form-control:focus {
+        border-color: #75c473;
+        box-shadow: 0 0 0 .1rem #75c473
+    }
+
+    .box .alert-success {
+        border-radius: 1rem
+    }
+
+    .box button {
+        border-radius: 1rem;
+        height: calc(3.5rem + 2px);
+        line-height: 1.25
+    }
+
+    .box .btn-success {
+        background-color: #75c473;
+        color: #fff;
+        border-color: #75c473
+    }
+
+    .box #jiaocheng .btn svg {
+        margin-top: -2px
+    }
+
+    .box #jiaocheng .btn3 {
+        margin-top: 1rem
+    }
+
+    .box #jiaocheng .btn3 a {
+        display: inline-flex;
+        font-size: .8rem;
+        background-color: #75c473;
+        color: #fff;
+        border-radius: .25rem;
+        margin-bottom: .2rem;
+        padding: .5rem
+    }
+
+    .box .uid .form-floating {
+        float: left
+    }
+
+    .box .uid .form-floating .form-control {
+        float: left
+    }
+
+    .box .uid .btn-secondary {
+        float: left;
+        border-radius: 0 1rem 1rem 0
+    }
+
+    .box .uid #uid {
+        border-radius: 1rem 0 0 1rem
+    }
+
+    .box .uid .btn-success {
+        float: right
+    }
+
+    @media screen and (max-width: 800px) {
+        body > .container {
+            width: 100%
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .box {
+            top: 8rem;
+            border-radius: 2rem 2rem 0 0
+        }
+
+        .box .uid .form-floating {
+            width: 70%
+        }
+
+        .box .uid .btn-secondary {
+            width: 30%
+        }
+
+        .box .uid .btn-success {
+            width: 100%;
+            margin-top: 1rem
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .box {
+            top: 10rem
+        }
+    }
+</style>
+<body>
+<div class="container">
+    <div class="box col-12">
+        <div class="text-center alert alert-success mb-3" role="alert" id="content">
+            请输入你的 Uid 让平台帮你进行刷关卡吧
+        </div>
+        <div class="text-center alert alert-success mb-3" role="alert" id="">
+            打开羊羊小程序，<b>点击右上角的此轮</b>，把 <b>UID</b> 记下来，在下面方输入自己的 <b>UID</b>
+        </div>
+        <div class="form-floating mb-5">
+            <input class="form-control" id="uid" placeholder="输入ID获取token"
+                   oninput="value=value.replace(/[^\d]/g,'')">
+            <label for="token">输入正确的 UID </label>
+        </div>
+
+        <div class="form-floating mb-5">
+            <input class="form-control" id="times" placeholder="请输入你的通关次数"
+                   oninput="value=value.replace(/[^\d]/g,'')" value="1" maxlength="4">
+            <label for="frequency">请输入通关次数（限制9999次）</label>
+        </div>
+        <button class="btn btn-success col-12 mb-4" id="get_code" onclick="go()">提交</button>
+        <div class="text-center alert alert-danger mb-3" role="alert">
+            使用异步执行任务，提交后关闭网页也没关系。通关成功率取决于羊的服务器~
+        </div>
+    </div>
+</div>
+<script>
+    function go() {
+        let uid = $('#uid').val();
+        let times = $('#times').val();
+        if (uid.length < 1 || times < 0) {
+            layer.alert('输入正确的参数');
+            return false;
+        }
+        $.post('/do', {uid: uid, times: times}, function (res) {
+            console.log(res);
+            layer.alert('任务提交成功，可以打开小程序查看进度');
+        });
+    }
+</script>
+</body>
+</html>
