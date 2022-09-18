@@ -33,4 +33,4 @@ def getToken(uid):
 
 if __name__ == '__main__':
 
-    getToken("33179305")
+    getToken("")
